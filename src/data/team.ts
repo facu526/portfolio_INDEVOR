@@ -4,6 +4,7 @@ export type TeamMemberImage = Readonly<{
   alt: string;
   width: number;
   height: number;
+  position?: string;
 }>;
 
 export type TeamMemberPlaceholder = Readonly<{
@@ -27,58 +28,69 @@ export type TeamMember = Readonly<{
   links?: TeamMemberLinks;
 }>;
 
-const placeholderDescription =
-  "Estudiante de Ingeniería Informática. Información del perfil por completar.";
+const memberDescription = "Estudiante de Ingeniería Informática.";
 
 export const teamMembers: readonly TeamMember[] = [
   {
     id: "integrante-01",
-    name: "Integrante 01",
-    description: placeholderDescription,
+    name: "Facundo Sanchez",
+    description: memberDescription,
     portrait: {
-      kind: "placeholder",
-      label: "01",
-      alt: "Foto pendiente del integrante 01 de INDEVOR",
+      kind: "image",
+      src: "/team/facundo-sanchez.jpg",
+      alt: "Facundo Sanchez, integrante de INDEVOR",
+      width: 707,
+      height: 707,
+      position: "68% center",
     },
   },
   {
     id: "integrante-02",
-    name: "Integrante 02",
-    description: placeholderDescription,
+    name: "Telita",
+    description: memberDescription,
     portrait: {
-      kind: "placeholder",
-      label: "02",
-      alt: "Foto pendiente del integrante 02 de INDEVOR",
+      kind: "image",
+      src: "/team/telita.jpg",
+      alt: "Telita, integrante de INDEVOR",
+      width: 748,
+      height: 1600,
+      position: "center 30%",
     },
   },
   {
     id: "integrante-03",
-    name: "Integrante 03",
-    description: placeholderDescription,
+    name: "Cui cui",
+    description: memberDescription,
     portrait: {
-      kind: "placeholder",
-      label: "03",
-      alt: "Foto pendiente del integrante 03 de INDEVOR",
+      kind: "image",
+      src: "/team/cui-cui.jpg",
+      alt: "Cui cui, integrante de INDEVOR",
+      width: 880,
+      height: 1184,
     },
   },
   {
     id: "integrante-04",
-    name: "Integrante 04",
-    description: placeholderDescription,
+    name: "Cejitas premium",
+    description: memberDescription,
     portrait: {
-      kind: "placeholder",
-      label: "04",
-      alt: "Foto pendiente del integrante 04 de INDEVOR",
+      kind: "image",
+      src: "/team/cejitas-premium.jpg",
+      alt: "Cejitas premium, integrante de INDEVOR",
+      width: 676,
+      height: 899,
     },
   },
   {
     id: "integrante-05",
-    name: "Integrante 05",
-    description: placeholderDescription,
+    name: "Laureano Gomez Moreno",
+    description: memberDescription,
     portrait: {
-      kind: "placeholder",
-      label: "05",
-      alt: "Foto pendiente del integrante 05 de INDEVOR",
+      kind: "image",
+      src: "/team/laureano-gomez-moreno.jpg",
+      alt: "Laureano Gomez Moreno, integrante de INDEVOR",
+      width: 1086,
+      height: 1448,
     },
   },
 ];
