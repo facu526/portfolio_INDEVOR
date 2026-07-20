@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { headers } from "next/headers";
 import { Footer } from "@/src/components/Footer";
 import { Header } from "@/src/components/Header";
@@ -7,14 +7,20 @@ import { siteConfig } from "@/src/config/site";
 import "./globals.css";
 import "./project-pages.css";
 
-const geistSans = Geist({
+const geistSans = localFont({
+  src: "./fonts/geist-latin.woff2",
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  display: "swap",
+  fallback: ["Arial", "sans-serif"],
+  weight: "100 900",
 });
 
-const geistMono = Geist_Mono({
+const geistMono = localFont({
+  src: "./fonts/geist-mono-latin.woff2",
   variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
+  fallback: ["monospace"],
+  weight: "100 900",
 });
 
 export async function generateMetadata(): Promise<Metadata> {

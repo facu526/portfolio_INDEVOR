@@ -28,6 +28,7 @@ test("server-renders the complete INDEVOR home", async () => {
   assert.match(html, /Cinco personas, un mismo equipo/);
   assert.match(html, /¿Construimos algo juntos\?/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/i);
+  assert.doesNotMatch(html, /(?:file:\/\/\/|[A-Z]:\/).*\.woff2/i);
 });
 
 test("renders the project index and every demo case", async () => {
