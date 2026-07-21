@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: siteConfig.metadata.description,
     applicationName: "INDEVOR",
     category: "technology",
-    icons: { icon: "/brand/favicon.png", shortcut: "/brand/favicon.png", apple: "/brand/favicon.png" },
+    icons: { icon: "/icon.png", shortcut: "/icon.png", apple: "/icon.png" },
     openGraph: {
       type: "website",
       locale: siteConfig.metadata.locale,

@@ -30,16 +30,22 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${project.name} — Caso Demo`;
-
   return {
-    title,
-    description: project.description,
+    title: `${project.name} — ${project.status}`,
+    description: project.shortDescription,
     alternates: { canonical: `/proyectos/${project.slug}` },
     openGraph: {
-      title: `${project.name} — Caso Demo de INDEVOR`,
-      description: project.description,
+      title: `${project.name} — Proyecto de INDEVOR`,
+      description: project.shortDescription,
       type: "article",
+      images: [
+        {
+          url: project.image,
+          width: project.imageWidth,
+          height: project.imageHeight,
+          alt: project.imageAlt,
+        },
+      ],
     },
   };
 }
@@ -51,10 +57,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   if (!project) {
     notFound();
   }
-
-  const hasExternalLinks = Boolean(
-    project.websiteUrl || project.repositoryUrl,
-  );
 
   return (
     <main id="contenido" className="case-study">
@@ -70,10 +72,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <div className="case-study__heading">
               <p className="case-study__status">
                 <span>{project.status}</span>
-                Caso conceptual
+                Proyecto web
               </p>
               <h1>{project.name}</h1>
-              <p className="case-study__description">{project.description}</p>
+              <p className="case-study__description">
+                {project.shortDescription}
+              </p>
             </div>
 
             <dl className="case-study__metadata">
@@ -97,7 +101,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         <figure className="case-study__cover">
           <ProjectArtwork
-            visual={project.cover}
+            image={project.image}
+            imageAlt={project.imageAlt}
+            width={project.imageWidth}
+            height={project.imageHeight}
             priority
             sizes="100vw"
           />
@@ -109,95 +116,39 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             aria-labelledby="case-overview-heading"
           >
             <p className="case-study__section-label">Descripción general</p>
-            <h2 id="case-overview-heading">Una mirada al proyecto</h2>
-            <p>{project.overview}</p>
-          </section>
-
-          <div className="case-study__narrative">
-            <section aria-labelledby="case-objective-heading">
-              <p className="case-study__section-label">El punto de partida</p>
-              <h2 id="case-objective-heading">Objetivo</h2>
-              <p>{project.objective}</p>
-            </section>
-
-            <section aria-labelledby="case-solution-heading">
-              <p className="case-study__section-label">La propuesta</p>
-              <h2 id="case-solution-heading">Solución</h2>
-              <p>{project.solution}</p>
-            </section>
-          </div>
-
-          <section
-            className="case-study__features"
-            aria-labelledby="case-features-heading"
-          >
-            <div className="case-study__section-heading">
-              <p className="case-study__section-label">Alcance del Demo</p>
-              <h2 id="case-features-heading">Funcionalidades</h2>
-            </div>
-            <ul>
-              {project.features.map((feature, index) => (
-                <li key={feature}>
-                  <span aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  {feature}
-                </li>
-              ))}
-            </ul>
+            <h2 id="case-overview-heading">Sobre el proyecto</h2>
+            <p>{project.shortDescription}</p>
           </section>
 
           <section
             className="case-study__technologies"
-            aria-labelledby="case-technologies-heading"
+            aria-labelledby="case-tags-heading"
           >
-            <p className="case-study__section-label">Stack propuesto</p>
-            <h2 id="case-technologies-heading">Herramientas exploradas</h2>
+            <p className="case-study__section-label">Alcance</p>
+            <h2 id="case-tags-heading">Áreas de trabajo</h2>
             <ul>
-              {project.technologies.map((technology) => (
-                <li key={technology}>{technology}</li>
+              {project.tags.map((tag) => (
+                <li key={tag}>{tag}</li>
               ))}
             </ul>
           </section>
         </div>
 
-        <section
-          className="case-study__gallery"
-          aria-labelledby="case-gallery-heading"
+        <aside
+          className="case-study__external-links"
+          aria-labelledby="case-links-heading"
         >
-          <div className="case-study__gallery-heading">
-            <p className="case-study__section-label">Galería conceptual</p>
-            <h2 id="case-gallery-heading">Vistas del Demo</h2>
+          <h2 id="case-links-heading">Explorar el proyecto</h2>
+          <div>
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Visitar sitio web <span aria-hidden="true">↗</span>
+            </a>
           </div>
-
-          <ul className="case-study__gallery-grid">
-            {project.gallery.map((item) => (
-              <li key={item.id}>
-                <figure className="case-study__gallery-item">
-                  <ProjectArtwork visual={item} sizes="(max-width: 767px) 100vw, 50vw" />
-                  {item.caption ? <figcaption>{item.caption}</figcaption> : null}
-                </figure>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {hasExternalLinks ? (
-          <aside
-            className="case-study__external-links"
-            aria-labelledby="case-links-heading"
-          >
-            <h2 id="case-links-heading">Explorar el proyecto</h2>
-            <div>
-              {project.websiteUrl ? (
-                <a href={project.websiteUrl}>Visitar sitio web</a>
-              ) : null}
-              {project.repositoryUrl ? (
-                <a href={project.repositoryUrl}>Ver repositorio</a>
-              ) : null}
-            </div>
-          </aside>
-        ) : null}
+        </aside>
 
         <footer className="case-study__footer">
           <Link className="case-study__back-link" href="/proyectos">

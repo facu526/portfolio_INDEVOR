@@ -7,12 +7,12 @@ import { projects } from "@/src/data/projects";
 export const metadata: Metadata = {
   title: "Proyectos",
   description:
-    "Casos conceptuales de diseño y desarrollo web creados por el equipo de INDEVOR.",
+    "Proyectos de diseño y desarrollo web creados por el equipo de INDEVOR.",
   alternates: { canonical: "/proyectos" },
   openGraph: {
-    title: "Proyectos demo — INDEVOR",
+    title: "Proyectos — INDEVOR",
     description:
-      "Una selección de productos digitales conceptuales diseñados y desarrollados por INDEVOR.",
+      "Una selección de experiencias digitales diseñadas y desarrolladas por INDEVOR.",
     type: "website",
   },
 };
@@ -25,13 +25,13 @@ export default function ProjectsPage() {
           <p className="projects-page__eyebrow">Portfolio</p>
           <h1 className="projects-page__title">Proyectos</h1>
           <p className="projects-page__intro">
-            Una selección de ideas donde combinamos estrategia, diseño y
+            Una selección de proyectos donde combinamos estrategia, diseño y
             desarrollo para construir experiencias digitales claras.
           </p>
           <p className="projects-page__disclaimer">
-            Todos los casos presentados son proyectos conceptuales marcados
-            como <strong>Demo</strong>. No representan clientes ni resultados
-            reales.
+            Los trabajos conceptuales están identificados claramente como
+            <strong> Demo conceptual</strong>. No se presentan como clientes ni
+            incluyen resultados no verificados.
           </p>
         </div>
       </header>
@@ -42,12 +42,12 @@ export default function ProjectsPage() {
       >
         <div className="projects-page__section-heading">
           <p className="projects-page__section-index" aria-hidden="true">
-            01
+            {String(projects.length).padStart(2, "0")} — {String(projects.length).padStart(2, "0")}
           </p>
-          <h2 id="projects-page-heading">Casos de estudio Demo</h2>
+          <h2 id="projects-page-heading">Proyectos seleccionados</h2>
         </div>
 
-        <ul className="projects-page__grid">
+        <ul className="projects-page__grid" data-project-count={projects.length}>
           {projects.map((project, index) => (
             <li className="projects-page__item" key={project.slug}>
               <ProjectCard
@@ -55,6 +55,7 @@ export default function ProjectsPage() {
                 headingLevel="h3"
                 priority={index < 2}
                 index={index + 1}
+                total={projects.length}
               />
             </li>
           ))}

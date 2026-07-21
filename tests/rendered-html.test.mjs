@@ -27,22 +27,29 @@ test("server-renders the complete INDEVOR home", async () => {
   assert.match(html, /Proyectos seleccionados/);
   assert.match(html, /Cinco personas, un mismo equipo/);
   assert.match(html, /¿Construimos algo juntos\?/);
+  assert.match(html, /Contanos sobre tu proyecto/);
+  assert.match(html, /Enviar consulta/);
+  assert.match(html, /\+54 9 11 0000-0000/);
+  assert.match(html, /hola@indevor\.com/);
+  assert.match(html, /@indevor\.digital/);
+  assert.doesNotMatch(html, /Por configurar|Datos de contacto provisionales|Se abrirá tu aplicación de correo/);
+  assert.doesNotMatch(html, /href=["'](?:https:\/\/wa\.me\/5491100000000|mailto:hola@indevor\.com|https:\/\/www\.instagram\.com\/indevor\.digital\/)["']/i);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/i);
   assert.doesNotMatch(html, /(?:file:\/\/\/|[A-Z]:\/).*\.woff2/i);
 });
 
-test("renders the project index and every demo case", async () => {
+test("renders the project index and Áurea Eventos", async () => {
   const indexResponse = await render("/proyectos");
   assert.equal(indexResponse.status, 200);
   const indexHtml = await indexResponse.text();
-  assert.match(indexHtml, /Todos los casos presentados son proyectos conceptuales/);
+  assert.match(indexHtml, /Demo conceptual/);
 
-  for (const [slug, name] of [["nexo", "Nexo"], ["atlas", "Atlas"], ["umbral", "Umbral"]]) {
+  for (const [slug, name] of [["aurea-eventos", "Áurea Eventos"]]) {
     const response = await render(`/proyectos/${slug}`);
     assert.equal(response.status, 200);
     const html = await response.text();
     assert.match(html, new RegExp(`<h1[^>]*>${name}<\\/h1>`));
-    assert.match(html, /Caso conceptual/);
+    assert.match(html, /Demo conceptual/);
     assert.doesNotMatch(html, /href=["']#["']/i);
     assert.doesNotMatch(html, /href=["'](?:[^"']*\.example|https:\/\/wa\.me\/5491100000000)/i);
   }
@@ -57,9 +64,13 @@ test("keeps starter preview code and placeholder links out of the finished site"
   ]);
 
   assert.doesNotMatch(`${layout}\n${page}\n${packageJson}`, /codex-preview|SkeletonPreview|react-loading-skeleton/);
-  assert.match(siteConfig, /href:\s*null/g);
+  assert.equal((siteConfig.match(/enabled:\s*false/g) ?? []).length, 3);
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));
-  await access(new URL("../public/brand/indevor-logo.png", import.meta.url));
+  await access(new URL("../public/brand/indevor-logo-oficial.png", import.meta.url));
+  await access(new URL("../public/brand/indevor-symbol.png", import.meta.url));
+  await access(new URL("../public/brand/indevor-symbol.svg", import.meta.url));
+  await access(new URL("../app/icon.png", import.meta.url));
+  await access(new URL("../app/manifest.ts", import.meta.url));
   await access(new URL("../public/og.png", import.meta.url));
   await access(new URL("../app/sitemap.ts", import.meta.url));
   await access(new URL("../app/robots.ts", import.meta.url));

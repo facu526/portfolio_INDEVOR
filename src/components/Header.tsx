@@ -43,7 +43,7 @@ export function Header() {
     <header className={`site-header${scrolled ? " site-header--scrolled" : ""}${menuOpen ? " site-header--open" : ""}`}>
       <div className="site-header__inner">
         <Link className="site-header__brand" href="/" aria-label="INDEVOR — Inicio" onClick={() => setMenuOpen(false)}>
-          <Image src="/brand/indevor-logo.png" alt="INDEVOR" width={1069} height={509} priority />
+          <Image src="/brand/indevor-logo-oficial.png" alt="INDEVOR" width={1107} height={533} priority />
         </Link>
 
         <button

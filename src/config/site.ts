@@ -9,9 +9,10 @@ export type CtaLink = Readonly<{
 }>;
 
 export type ProvisionalContactChannel = Readonly<{
-  value: string | null;
+  value: string;
   label: string;
-  href: string | null;
+  href: string;
+  enabled: boolean;
   isProvisional: true;
 }>;
 
@@ -58,6 +59,7 @@ export type SiteConfig = Readonly<{
     replacementNote: string;
     email: ProvisionalContactChannel;
     whatsapp: ProvisionalContactChannel;
+    instagram: ProvisionalContactChannel;
   }>;
   footer: Readonly<{
     note: string;
@@ -67,8 +69,8 @@ export type SiteConfig = Readonly<{
 /**
  * Editable site copy and contact details.
  *
- * IMPORTANT: both contact channels below are deliberate placeholders. Replace
- * their value, label and href together before publishing the site.
+ * IMPORTANT: the contact channels below are deliberate placeholders. Replace
+ * their value, label and href, then set enabled to true before publishing.
  */
 export const siteConfig = {
   name: "INDEVOR",
@@ -94,7 +96,7 @@ export const siteConfig = {
     eyebrow: "Portfolio",
     title: "Proyectos seleccionados",
     description:
-      "Exploraciones propias para mostrar cómo abordamos distintos productos digitales. Cada proyecto está identificado claramente como Demo.",
+      "Una selección de experiencias digitales donde combinamos diseño y desarrollo. Los trabajos conceptuales están identificados claramente.",
     linkLabel: "Ver todos los proyectos",
   },
   about: {
@@ -127,17 +129,29 @@ export const siteConfig = {
     description: "Contanos tu idea y veamos cómo podemos llevarla a la web.",
     isProvisional: true,
     replacementNote:
-      "TODO antes de publicar: reemplazar correo y WhatsApp por los datos oficiales de INDEVOR.",
+      "TODO antes de publicar: reemplazar WhatsApp, correo e Instagram por los datos oficiales de INDEVOR.",
+    // TODO: Reemplazar por el correo definitivo de INDEVOR
     email: {
-      value: null,
-      label: "Correo por configurar",
-      href: null,
+      value: "hola@indevor.com",
+      label: "hola@indevor.com",
+      href: "mailto:hola@indevor.com",
+      enabled: false,
       isProvisional: true,
     },
+    // TODO: Reemplazar por el WhatsApp definitivo de INDEVOR
     whatsapp: {
-      value: null,
-      label: "WhatsApp por configurar",
-      href: null,
+      value: "+5491100000000",
+      label: "+54 9 11 0000-0000",
+      href: "https://wa.me/5491100000000",
+      enabled: false,
+      isProvisional: true,
+    },
+    // TODO: Reemplazar por el Instagram definitivo de INDEVOR
+    instagram: {
+      value: "@indevor.digital",
+      label: "@indevor.digital",
+      href: "https://www.instagram.com/indevor.digital/",
+      enabled: false,
       isProvisional: true,
     },
   },

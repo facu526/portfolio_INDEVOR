@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="site-footer">
       <div className="site-footer__inner">
         <Link className="site-footer__brand" href="/" aria-label="INDEVOR — Inicio">
-          <Image src="/brand/indevor-logo.png" alt="INDEVOR" width={1069} height={509} />
+          <Image src="/brand/indevor-logo-oficial.png" alt="INDEVOR" width={1107} height={533} />
         </Link>
         <nav className="site-footer__nav" aria-label="Navegación del pie">
           {siteConfig.navigation.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}

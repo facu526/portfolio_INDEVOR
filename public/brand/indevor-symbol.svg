@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 348" role="img" aria-labelledby="title desc">
+  <title id="title">Símbolo de INDEVOR</title>
+  <desc id="desc">Símbolo oficial con la i separada de la D y una flecha central azul y violeta.</desc>
+  <path id="d" data-material="light" fill="#f8f8fa" fill-rule="evenodd" d="M 180.5 7 L 183 5.5 L 339 5.5 L 366 9.5 L 392 18.5 L 414 30.5 L 435 46.5 L 454.5 67 L 468.5 87 L 483.5 120 L 490.5 150 L 491.5 188 L 486.5 217 L 473.5 251 L 452.5 283 L 429 306.5 L 408 321.5 L 391 330.5 L 372 337.5 L 354 341.5 L 336 343.5 L 187.5 343 L 194 335.5 L 266 274.5 L 315 274.5 L 345 272.5 L 363 266.5 L 383 254.5 L 400.5 237 L 407.5 227 L 414.5 213 L 421.5 187 L 421.5 160 L 414.5 134 L 400.5 110 L 385 94.5 L 374 86.5 L 358 78.5 L 344 74.5 L 253 73.5 L 252.5 122 L 251 122.5 L 180.5 76 Z" />
+  <path id="arrow" data-material="color" fill="#4258ff" fill-rule="evenodd" d="M 179.5 111 L 179.5 159 L 228.5 201 L 179.5 246 L 181 313.5 L 296 215.5 L 304.5 205 L 304.5 196 L 299 188.5 L 286 179.5 L 191 115.5 L 181 109.5 Z" />
+  <path id="i-dot" data-material="color" fill="#4258ff" fill-rule="evenodd" d="M 3.5 6 L 95 5.5 L 95.5 94 L 94 94.5 Z" />
+  <path id="i-stem" data-material="light" fill="#f8f8fa" fill-rule="evenodd" d="M 26.5 87 L 26.5 343 L 94 343.5 L 95.5 342 L 95.5 136 L 39 94.5 Z" />
+</svg>

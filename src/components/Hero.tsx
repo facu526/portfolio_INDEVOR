@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/src/config/site";
-import { InteractiveLogo } from "./InteractiveLogo";
+import { HeroLogo3D } from "./HeroLogo3D";
 
 export function Hero() {
   return (
@@ -18,7 +18,7 @@ export function Hero() {
             <Link className="button button--ghost" href={siteConfig.hero.secondaryCta.href}>{siteConfig.hero.secondaryCta.label}<span aria-hidden="true">↗</span></Link>
           </div>
         </div>
-        <div className="hero__visual"><InteractiveLogo /></div>
+        <div className="hero__visual"><HeroLogo3D /></div>
       </div>
       <a className="hero__scroll" href="#proyectos"><span>Explorar</span><span aria-hidden="true">↓</span></a>
     </section>
