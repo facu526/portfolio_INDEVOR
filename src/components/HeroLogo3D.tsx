@@ -37,9 +37,9 @@ export function HeroLogo3D() {
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
-    if (!("IntersectionObserver" in window)) {
-      const timeout = window.setTimeout(() => setShouldLoad(true), 0);
-      return () => window.clearTimeout(timeout);
+    if (typeof IntersectionObserver === "undefined") {
+      const timeout = globalThis.setTimeout(() => setShouldLoad(true), 0);
+      return () => globalThis.clearTimeout(timeout);
     }
     const observer = new IntersectionObserver(
       ([entry]) => {

@@ -35,4 +35,4 @@ El correo y WhatsApp permanecen intencionalmente sin configurar. Reemplazá `val
 - Hero 2.5D construido con tres capas del símbolo original y transformaciones CSS.
 - Portadas de proyectos generadas con composiciones CSS, sin imágenes externas.
 - Metadata, Open Graph, favicon, sitemap, robots y 404 personalizada.
-- Salida compatible con Cloudflare Workers mediante vinext.
+- Build y despliegue nativos con Next.js, compatibles con Vercel.

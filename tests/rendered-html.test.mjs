@@ -1,17 +1,50 @@
 import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
 import { access, readFile } from "node:fs/promises";
-import test from "node:test";
+import { fileURLToPath } from "node:url";
+import test, { after, before } from "node:test";
+
+const projectRoot = fileURLToPath(new URL("..", import.meta.url));
+const testServerUrl = "http://127.0.0.1:3099";
+let testServer;
+
+before(async () => {
+  testServer = spawn(
+    process.execPath,
+    [
+      "node_modules/next/dist/bin/next",
+      "start",
+      "--hostname",
+      "127.0.0.1",
+      "--port",
+      "3099",
+    ],
+    {
+      cwd: projectRoot,
+      windowsHide: true,
+      stdio: "ignore",
+    },
+  );
+
+  for (let attempt = 0; attempt < 80; attempt += 1) {
+    try {
+      const response = await fetch(testServerUrl);
+      if (response.ok) return;
+    } catch {}
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+
+  throw new Error("El servidor de pruebas de Next.js no inició a tiempo.");
+});
+
+after(() => {
+  testServer?.kill();
+});
 
 async function render(path = "/") {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${path}`);
-  const { default: worker } = await import(workerUrl.href);
-
-  return worker.fetch(
-    new Request(`http://localhost${path}`, { headers: { accept: "text/html" } }),
-    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
-    { waitUntil() {}, passThroughOnException() {} },
-  );
+  return fetch(`${testServerUrl}${path}`, {
+    headers: { accept: "text/html" },
+  });
 }
 
 test("server-renders the complete INDEVOR home", async () => {
@@ -35,7 +68,11 @@ test("server-renders the complete INDEVOR home", async () => {
   assert.doesNotMatch(html, /Por configurar|Datos de contacto provisionales|Se abrirá tu aplicación de correo/);
   assert.doesNotMatch(html, /href=["'](?:https:\/\/wa\.me\/5491100000000|mailto:hola@indevor\.com|https:\/\/www\.instagram\.com\/indevor\.digital\/)["']/i);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/i);
-  assert.doesNotMatch(html, /(?:file:\/\/\/|[A-Z]:\/).*\.woff2/i);
+  assert.doesNotMatch(html, /file:\/\/\/[^"' ]*\.woff2/i);
+  assert.doesNotMatch(
+    html,
+    /(?:src|href)=["'][A-Z]:[\\/][^"']*\.woff2/i,
+  );
 });
 
 test("renders the project index and Áurea Eventos", async () => {
