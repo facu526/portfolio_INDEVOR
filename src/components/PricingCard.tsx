@@ -3,7 +3,6 @@ import { PackageContactLink } from "./PackageContactLink";
 
 type PricingCardProps = Readonly<{
   packagePlan: PackagePlan;
-  whatsappUrl: string | null;
 }>;
 
 function formatPrice(price: number) {
@@ -14,7 +13,6 @@ function formatPrice(price: number) {
 
 export function PricingCard({
   packagePlan,
-  whatsappUrl,
 }: PricingCardProps) {
   return (
     <article
@@ -56,8 +54,7 @@ export function PricingCard({
         className="pricing-card__cta"
         packageName={packagePlan.name}
         projectType={packagePlan.contactProjectType}
-        whatsappMessage={packagePlan.whatsappMessage}
-        whatsappUrl={whatsappUrl}
+        contactMessage={packagePlan.contactMessage}
       >
         Consultar este paquete
       </PackageContactLink>

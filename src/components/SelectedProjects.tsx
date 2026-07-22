@@ -2,6 +2,7 @@ import Link from "next/link";
 import { projects } from "@/src/data/projects";
 import { siteConfig } from "@/src/config/site";
 import { ProjectCard } from "./ProjectCard";
+import { LinkArrow } from "./LinkArrow";
 import { Reveal } from "./Reveal";
 
 export function SelectedProjects() {
@@ -11,7 +12,7 @@ export function SelectedProjects() {
     <section id="proyectos" className="section selected-projects" aria-labelledby="projects-title">
       <div className="section-shell">
         <Reveal className="section-heading">
-          <div><p className="eyebrow"><span /> {siteConfig.portfolio.eyebrow}</p><h2 id="projects-title">{siteConfig.portfolio.title}</h2></div>
+          <div><h2 id="projects-title">{siteConfig.portfolio.title}</h2></div>
           <p>{siteConfig.portfolio.description}</p>
         </Reveal>
         <div
@@ -20,17 +21,12 @@ export function SelectedProjects() {
         >
           {featuredProjects.map((project, index) => (
             <Reveal key={project.slug} delay={index * 70}>
-              <ProjectCard
-                project={project}
-                index={index + 1}
-                total={featuredProjects.length}
-                priority={index === 0}
-              />
+              <ProjectCard project={project} priority={index === 0} />
             </Reveal>
           ))}
         </div>
         <Reveal className="selected-projects__footer">
-          <Link className="text-link" href="/proyectos">{siteConfig.portfolio.linkLabel} <span aria-hidden="true">↗</span></Link>
+          <Link className="text-link" href="/proyectos">{siteConfig.portfolio.linkLabel} <LinkArrow /></Link>
         </Reveal>
       </div>
     </section>

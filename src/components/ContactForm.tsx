@@ -1,5 +1,7 @@
 "use client";
 
+import { LinkArrow } from "./LinkArrow";
+
 import {
   useEffect,
   useState,
@@ -23,13 +25,19 @@ export function ContactForm({ email }: ContactFormProps) {
   const [status, setStatus] = useState("");
   const [statusTone, setStatusTone] = useState<"error" | "info">("info");
   const [projectType, setProjectType] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const applyPackageSelection = (selection: PackageSelection) => {
       if (!selection.projectType) return;
 
       setProjectType(selection.projectType);
-      setErrors((current) => ({ ...current, projectType: undefined }));
+      setMessage(selection.message ?? "");
+      setErrors((current) => ({
+        ...current,
+        projectType: undefined,
+        message: undefined,
+      }));
       setStatus("");
       window.sessionStorage.removeItem(PACKAGE_SELECTION_STORAGE_KEY);
     };
@@ -228,12 +236,16 @@ export function ContactForm({ email }: ContactFormProps) {
           id="contact-message"
           name="message"
           rows={5}
+          value={message}
           placeholder="Contanos brevemente qué necesitás, si ya tenés una idea y para cuándo te gustaría tenerlo."
           aria-invalid={Boolean(errors.message)}
           aria-describedby={
             errors.message ? "contact-message-error" : undefined
           }
-          onChange={handleFieldChange}
+          onChange={(event) => {
+            setMessage(event.currentTarget.value);
+            handleFieldChange(event);
+          }}
         />
         {errors.message ? (
           <span id="contact-message-error" className="contact-form__error">
@@ -245,7 +257,7 @@ export function ContactForm({ email }: ContactFormProps) {
       <div className="contact-form__footer">
         <button className="contact-form__submit" type="submit">
           Enviar consulta
-          <span aria-hidden="true">↗</span>
+          <LinkArrow />
         </button>
         <p
           className="contact-form__status"

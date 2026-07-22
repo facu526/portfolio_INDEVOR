@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { LinkArrow } from "@/src/components/LinkArrow";
 import { notFound } from "next/navigation";
 
 import { ProjectArtwork } from "@/src/components/ProjectArtwork";
@@ -138,26 +139,26 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           className="case-study__external-links"
           aria-labelledby="case-links-heading"
         >
-          <h2 id="case-links-heading">Explorar el proyecto</h2>
+          <h2 id="case-links-heading">Enlaces del proyecto</h2>
           <div>
             <a
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
             >
-              Visitar sitio web <span aria-hidden="true">↗</span>
+              Visitar sitio web <LinkArrow />
             </a>
           </div>
         </aside>
 
         <footer className="case-study__footer">
           <Link className="case-study__back-link" href="/proyectos">
-            <span aria-hidden="true">←</span>
+            <LinkArrow direction="left" />
             Ver todos los proyectos
           </Link>
           <Link className="case-study__contact-link" href="/#contacto">
             ¿Creamos algo juntos?
-            <span aria-hidden="true">↗</span>
+            <LinkArrow />
           </Link>
         </footer>
       </article>

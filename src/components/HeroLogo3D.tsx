@@ -87,7 +87,7 @@ export function HeroLogo3D() {
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.25 : 1.75));
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.15;
+        renderer.toneMappingExposure = 1.02;
         renderer.shadowMap.enabled = !mobile;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -151,12 +151,12 @@ export function HeroLogo3D() {
             const faceMaterial = new THREE.MeshPhysicalMaterial({
               map: texture,
               color: 0xffffff,
-              metalness: colored ? 0.22 : 0.3,
-              roughness: colored ? 0.3 : 0.26,
-              clearcoat: colored ? 0.28 : 0.2,
+              metalness: colored ? 0.16 : 0.24,
+              roughness: colored ? 0.38 : 0.34,
+              clearcoat: colored ? 0.18 : 0.12,
               clearcoatRoughness: 0.28,
-              emissive: colored ? new THREE.Color(0x16287a) : new THREE.Color(0x000000),
-              emissiveIntensity: colored ? 0.16 : 0,
+              emissive: colored ? new THREE.Color(0x251c3c) : new THREE.Color(0x000000),
+              emissiveIntensity: colored ? 0.08 : 0,
               transparent: true,
               opacity: 0,
             });
@@ -189,11 +189,11 @@ export function HeroLogo3D() {
         key.shadow.radius = 5;
         scene.add(key);
 
-        const blue = new THREE.PointLight(0x2f6cff, mobile ? 19 : 25, 900, 2);
+        const blue = new THREE.PointLight(0x625182, mobile ? 10 : 13, 900, 2);
         blue.position.set(-310, 35, 240);
         scene.add(blue);
         if (!mobile) {
-          const violet = new THREE.PointLight(0x8b42ff, 23, 900, 2);
+          const violet = new THREE.PointLight(0x8066a8, 11, 900, 2);
           violet.position.set(310, 125, 210);
           scene.add(violet);
           const rim = new THREE.DirectionalLight(0xb9c6ff, 1.4);

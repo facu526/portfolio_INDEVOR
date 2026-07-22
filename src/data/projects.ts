@@ -21,7 +21,7 @@ export const projects: readonly Project[] = [
     slug: "aurea-eventos",
     name: "Áurea Eventos",
     shortDescription:
-      "Sitio web diseñado para presentar los espacios, propuestas y servicios de un salón de eventos de forma elegante, clara y adaptable a dispositivos móviles.",
+      "Una web simple para mostrar el salón, sus espacios y las opciones de reserva.",
     category: "Sitio web para salón de eventos",
     year: 2026,
     image: "/projects/aurea-eventos/cover.webp",

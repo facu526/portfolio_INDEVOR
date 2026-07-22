@@ -3,7 +3,6 @@
 import Image from "next/image";
 import type { PointerEvent } from "react";
 
-import { siteConfig } from "@/src/config/site";
 import { teamMembers } from "@/src/data/team";
 import { Reveal } from "./Reveal";
 
@@ -36,17 +35,8 @@ function resetPortraitTilt(event: PointerEvent<HTMLElement>) {
 
 export function Team() {
   return (
-    <section id="equipo" className="section team" aria-labelledby="team-title">
+    <div id="equipo" className="section team" aria-label="Integrantes de INDEVOR">
       <div className="section-shell">
-        <Reveal className="section-heading">
-          <div>
-            <p className="eyebrow">
-              <span /> {siteConfig.team.eyebrow}
-            </p>
-            <h2 id="team-title">{siteConfig.team.title}</h2>
-          </div>
-          <p>{siteConfig.team.description}</p>
-        </Reveal>
         <div className="team__grid">
           {teamMembers.map((member, index) => (
             <Reveal key={member.id} delay={index * 55} className="team-card">
@@ -89,6 +79,6 @@ export function Team() {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

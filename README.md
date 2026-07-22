@@ -21,18 +21,18 @@ npm test
 
 ## Contenido editable
 
-- `src/config/site.ts`: textos generales, navegación, capacidades, correo y WhatsApp.
+- `src/config/site.ts`: textos generales, navegación, servicios y canales de contacto.
 - `src/data/projects.ts`: proyectos, casos de estudio y galerías conceptuales.
 - `src/data/team.ts`: integrantes, descripciones, fotos y enlaces.
 - `public/brand/`: logo oficial preparado para web y piezas transparentes del símbolo.
 
-El correo y WhatsApp permanecen intencionalmente sin configurar. Reemplazá `value`, `label` y `href` juntos antes de usar los canales de contacto.
+El correo e Instagram permanecen intencionalmente sin configurar. El número visible de WhatsApp es provisorio; reemplazá `value`, `label` y `href` juntos cuando se confirme el definitivo.
 
 ## Implementación
 
 - App Router, TypeScript y CSS mantenible.
 - Rutas `/`, `/proyectos` y `/proyectos/[slug]`.
-- Hero 2.5D construido con tres capas del símbolo original y transformaciones CSS.
+- Hero 3D construido con Three.js a partir del símbolo original.
 - Portadas de proyectos generadas con composiciones CSS, sin imágenes externas.
 - Metadata, Open Graph, favicon, sitemap, robots y 404 personalizada.
 - Build y despliegue nativos con Next.js, compatibles con Vercel.
