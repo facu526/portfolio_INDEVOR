@@ -1,10 +1,16 @@
 "use client";
 
 import {
+  useEffect,
   useState,
   type ChangeEvent,
   type FormEvent,
 } from "react";
+import {
+  PACKAGE_SELECTION_EVENT,
+  PACKAGE_SELECTION_STORAGE_KEY,
+  type PackageSelection,
+} from "./PackageContactLink";
 
 type ContactFormProps = { email: string | null };
 type FieldName = "name" | "email" | "phone" | "projectType" | "message";
@@ -16,6 +22,44 @@ export function ContactForm({ email }: ContactFormProps) {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState("");
   const [statusTone, setStatusTone] = useState<"error" | "info">("info");
+  const [projectType, setProjectType] = useState("");
+
+  useEffect(() => {
+    const applyPackageSelection = (selection: PackageSelection) => {
+      if (!selection.projectType) return;
+
+      setProjectType(selection.projectType);
+      setErrors((current) => ({ ...current, projectType: undefined }));
+      setStatus("");
+      window.sessionStorage.removeItem(PACKAGE_SELECTION_STORAGE_KEY);
+    };
+
+    const storedSelection = window.sessionStorage.getItem(
+      PACKAGE_SELECTION_STORAGE_KEY,
+    );
+
+    if (storedSelection) {
+      try {
+        applyPackageSelection(JSON.parse(storedSelection) as PackageSelection);
+      } catch {
+        window.sessionStorage.removeItem(PACKAGE_SELECTION_STORAGE_KEY);
+      }
+    }
+
+    const handlePackageSelection = (event: Event) => {
+      applyPackageSelection(
+        (event as CustomEvent<PackageSelection>).detail,
+      );
+    };
+
+    window.addEventListener(PACKAGE_SELECTION_EVENT, handlePackageSelection);
+    return () => {
+      window.removeEventListener(
+        PACKAGE_SELECTION_EVENT,
+        handlePackageSelection,
+      );
+    };
+  }, []);
 
   const handleFieldChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
@@ -147,12 +191,15 @@ export function ContactForm({ email }: ContactFormProps) {
         <select
           id="contact-project-type"
           name="projectType"
-          defaultValue=""
+          value={projectType}
           aria-invalid={Boolean(errors.projectType)}
           aria-describedby={
             errors.projectType ? "contact-project-type-error" : undefined
           }
-          onChange={handleFieldChange}
+          onChange={(event) => {
+            setProjectType(event.currentTarget.value);
+            handleFieldChange(event);
+          }}
         >
           <option value="" disabled>
             Seleccioná una opción

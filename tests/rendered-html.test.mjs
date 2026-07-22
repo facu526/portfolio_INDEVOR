@@ -58,6 +58,17 @@ test("server-renders the complete INDEVOR home", async () => {
   assert.match(html, /Diseñamos\./);
   assert.match(html, /Desarrollamos\./);
   assert.match(html, /Proyectos seleccionados/);
+  assert.match(html, /Paquetes INDEVOR/);
+  assert.match(html, /Una solución para cada etapa/);
+  assert.match(html, /Landing Page/);
+  assert.match(html, /Sitio web/);
+  assert.match(html, /Catálogo o tienda online/);
+  assert.match(html, /300\.000/);
+  assert.match(html, /450\.000/);
+  assert.match(html, /700\.000/);
+  assert.match(html, /Más elegido/);
+  assert.match(html, /Armamos una propuesta a medida/);
+  assert.match(html, /href="#contacto"/);
   assert.match(html, /Cinco personas, un mismo equipo/);
   assert.match(html, /¿Construimos algo juntos\?/);
   assert.match(html, /Contanos sobre tu proyecto/);
@@ -93,15 +104,18 @@ test("renders the project index and Áurea Eventos", async () => {
 });
 
 test("keeps starter preview code and placeholder links out of the finished site", async () => {
-  const [layout, page, packageJson, siteConfig] = await Promise.all([
+  const [layout, page, packageJson, siteConfig, packageData] = await Promise.all([
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
     readFile(new URL("../src/config/site.ts", import.meta.url), "utf8"),
+    readFile(new URL("../src/data/packages.ts", import.meta.url), "utf8"),
   ]);
 
   assert.doesNotMatch(`${layout}\n${page}\n${packageJson}`, /codex-preview|SkeletonPreview|react-loading-skeleton/);
   assert.equal((siteConfig.match(/enabled:\s*false/g) ?? []).length, 3);
+  assert.equal((packageData.match(/enabled:\s*true/g) ?? []).length, 3);
+  assert.match(packageData, /TODO: Revisar precios, prestaciones y mensajes comerciales/);
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));
   await access(new URL("../public/brand/indevor-logo-oficial.png", import.meta.url));
   await access(new URL("../public/brand/indevor-symbol.png", import.meta.url));

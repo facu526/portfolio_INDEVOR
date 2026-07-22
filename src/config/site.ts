@@ -82,6 +82,7 @@ export const siteConfig = {
   },
   navigation: [
     { label: "Proyectos", href: "/proyectos" },
+    { label: "Paquetes", href: "/#paquetes" },
     { label: "Equipo", href: "/#equipo" },
     { label: "Contacto", href: "/#contacto" },
   ],
