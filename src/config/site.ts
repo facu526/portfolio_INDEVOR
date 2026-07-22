@@ -31,29 +31,17 @@ export type SiteConfig = Readonly<{
     secondaryCta: CtaLink;
   }>;
   portfolio: Readonly<{
-    eyebrow: string;
     title: string;
     description: string;
     linkLabel: string;
   }>;
   about: Readonly<{
-    eyebrow: string;
-    title: string;
     description: string;
   }>;
   capabilities: Readonly<{
-    eyebrow: string;
-    title: string;
     items: readonly string[];
   }>;
-  team: Readonly<{
-    eyebrow: string;
-    title: string;
-    description: string;
-  }>;
   contact: Readonly<{
-    eyebrow: string;
-    title: string;
     description: string;
     isProvisional: true;
     replacementNote: string;
@@ -69,8 +57,8 @@ export type SiteConfig = Readonly<{
 /**
  * Editable site copy and contact details.
  *
- * IMPORTANT: the contact channels below are deliberate placeholders. Replace
- * their value, label and href, then set enabled to true before publishing.
+ * IMPORTANT: email and Instagram below are deliberate placeholders. WhatsApp
+ * opens without a recipient until the official number is available.
  */
 export const siteConfig = {
   name: "INDEVOR",
@@ -81,9 +69,10 @@ export const siteConfig = {
     locale: "es_AR",
   },
   navigation: [
+    { label: "Nosotros", href: "/#nosotros" },
     { label: "Proyectos", href: "/proyectos" },
+    { label: "Reseñas", href: "/#resenas" },
     { label: "Paquetes", href: "/#paquetes" },
-    { label: "Equipo", href: "/#equipo" },
     { label: "Contacto", href: "/#contacto" },
   ],
   hero: {
@@ -94,21 +83,15 @@ export const siteConfig = {
     secondaryCta: { label: "Hablemos", href: "/#contacto" },
   },
   portfolio: {
-    eyebrow: "Portfolio",
-    title: "Proyectos seleccionados",
-    description:
-      "Una selección de experiencias digitales donde combinamos diseño y desarrollo. Los trabajos conceptuales están identificados claramente.",
+    title: "Proyectos destacados",
+    description: "Una muestra del trabajo que hacemos en equipo.",
     linkLabel: "Ver todos los proyectos",
   },
   about: {
-    eyebrow: "Sobre INDEVOR",
-    title: "Cinco personas, un mismo equipo.",
     description:
-      "INDEVOR es un equipo de cinco estudiantes de Ingeniería Informática que combina diseño, desarrollo y tecnología para transformar ideas en experiencias digitales funcionales.",
+      "Somos cinco estudiantes de Ingeniería Informática. Diseñamos y desarrollamos productos digitales juntos.",
   },
   capabilities: {
-    eyebrow: "Capacidades",
-    title: "Qué podemos construir",
     items: [
       "Sitios web",
       "Landing pages",
@@ -118,19 +101,11 @@ export const siteConfig = {
       "Mantenimiento y evolución",
     ],
   },
-  team: {
-    eyebrow: "Equipo",
-    title: "Cinco personas, un trabajo compartido.",
-    description:
-      "Somos estudiantes de Ingeniería Informática y trabajamos de forma colaborativa.",
-  },
   contact: {
-    eyebrow: "Contacto",
-    title: "¿Construimos algo juntos?",
     description: "Contanos tu idea y veamos cómo podemos llevarla a la web.",
     isProvisional: true,
     replacementNote:
-      "TODO antes de publicar: reemplazar WhatsApp, correo e Instagram por los datos oficiales de INDEVOR.",
+      "TODO antes de publicar: confirmar el número de WhatsApp y reemplazar correo e Instagram por los datos oficiales de INDEVOR.",
     // TODO: Reemplazar por el correo definitivo de INDEVOR
     email: {
       value: "hola@indevor.com",
@@ -139,12 +114,12 @@ export const siteConfig = {
       enabled: false,
       isProvisional: true,
     },
-    // TODO: Reemplazar por el WhatsApp definitivo de INDEVOR
+    // TODO: Confirmar o reemplazar por el número definitivo de INDEVOR
     whatsapp: {
-      value: "+5491100000000",
-      label: "+54 9 11 0000-0000",
-      href: "https://wa.me/5491100000000",
-      enabled: false,
+      value: "5491112345678",
+      label: "+54 9 11 1234-5678",
+      href: "https://wa.me/5491112345678",
+      enabled: true,
       isProvisional: true,
     },
     // TODO: Reemplazar por el Instagram definitivo de INDEVOR

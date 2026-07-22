@@ -1,20 +1,17 @@
 import { ProjectArtwork } from "@/src/components/ProjectArtwork";
 import type { Project } from "@/src/data/projects";
+import { LinkArrow } from "./LinkArrow";
 
 type ProjectCardProps = Readonly<{
   project: Project;
   headingLevel?: "h2" | "h3";
   priority?: boolean;
-  index?: number;
-  total?: number;
 }>;
 
 export function ProjectCard({
   project,
   headingLevel = "h3",
   priority = false,
-  index,
-  total = 1,
 }: ProjectCardProps) {
   const Heading = headingLevel;
 
@@ -37,17 +34,12 @@ export function ProjectCard({
           sizes="(max-width: 767px) 100vw, (max-width: 1199px) 92vw, 1280px"
         >
           <span className="project-card__visit">
-            Ver proyecto <span aria-hidden="true">↗</span>
+            Ver proyecto <LinkArrow />
           </span>
         </ProjectArtwork>
 
         <div className="project-card__body">
           <div className="project-card__meta">
-            {index ? (
-              <span className="project-card__index" aria-hidden="true">
-                {String(index).padStart(2, "0")} — {String(total).padStart(2, "0")}
-              </span>
-            ) : null}
             <span className="project-card__status">{project.status}</span>
             <span>{project.category}</span>
             <span aria-hidden="true">·</span>
@@ -56,9 +48,7 @@ export function ProjectCard({
 
           <div className="project-card__heading">
             <Heading className="project-card__title">{project.name}</Heading>
-            <span className="project-card__arrow" aria-hidden="true">
-              ↗
-            </span>
+            <span className="project-card__arrow" aria-hidden="true"><LinkArrow /></span>
           </div>
 
           <p className="project-card__description">{project.shortDescription}</p>

@@ -1105,10 +1105,10 @@
   display: flex;
   height: 100%;
   flex-direction: column;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: calc(var(--radius) + 0.35rem);
-  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   text-decoration: none;
   transition:
     border-color 260ms ease,
@@ -1119,8 +1119,9 @@
 .project-card__artwork {
   flex: 0 0 auto;
   aspect-ratio: 8 / 5;
-  border: 0;
-  border-radius: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
   box-shadow: none;
 }
 
@@ -1159,7 +1160,7 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  padding: clamp(1.15rem, 2.5vw, 1.65rem);
+  padding: 1.15rem 0 0;
 }
 
 .project-card__meta {
@@ -1175,19 +1176,11 @@
   text-transform: uppercase;
 }
 
-.project-card__index {
-  min-width: 4.25rem;
-  color: color-mix(in srgb, var(--text) 42%, transparent);
-}
-
 .project-card__status {
   display: inline-flex;
   align-items: center;
-  padding: 0.23rem 0.5rem;
-  border: 1px solid color-mix(in srgb, var(--blue) 45%, var(--line));
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--blue) 8%, transparent);
-  color: color-mix(in srgb, var(--text) 84%, var(--blue));
+  padding: 0;
+  color: #9b8dc2;
 }
 
 .project-card__heading {
@@ -1200,7 +1193,7 @@
 
 .project-card__title {
   margin: 0;
-  font-size: clamp(1.65rem, 5vw, 2.65rem);
+  font-size: clamp(1.55rem, 4vw, 2.25rem);
   font-weight: 500;
   letter-spacing: -0.045em;
   line-height: 1;
@@ -1221,9 +1214,10 @@
     color 220ms ease,
     transform 220ms ease;
 }
+.project-card__arrow .link-arrow { width: 0.92rem; height: 0.92rem; }
 
 .project-card__description {
-  max-width: 34rem;
+  max-width: 30rem;
   margin: 0.85rem 0 0;
   color: var(--muted);
   font-size: clamp(0.94rem, 1.6vw, 1.04rem);
@@ -1240,13 +1234,19 @@
 }
 
 .project-card__technologies li {
-  padding: 0.35rem 0.6rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.66rem;
   letter-spacing: 0.035em;
+}
+
+.project-card__technologies li:not(:last-child)::after {
+  margin-left: 0.45rem;
+  color: #55555f;
+  content: "·";
 }
 
 /* --------------------------------------------------------------------------
@@ -1271,7 +1271,8 @@
   width: min(58rem, 90vw);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--blue) 17%, transparent), transparent 68%);
+  background: color-mix(in srgb, var(--violet) 8%, transparent);
+  filter: blur(7rem);
   content: "";
   pointer-events: none;
 }
@@ -1289,7 +1290,6 @@
 }
 
 .projects-page__eyebrow,
-.projects-page__section-index,
 .projects-page__contact-kicker {
   margin: 0;
   color: var(--blue);
@@ -1338,8 +1338,7 @@
 }
 
 .projects-page__section-heading {
-  display: grid;
-  grid-template-columns: 5rem 1fr;
+  display: block;
   align-items: end;
   gap: 0.75rem;
   margin-bottom: clamp(2rem, 5vw, 4rem);
@@ -1354,10 +1353,6 @@
   letter-spacing: -0.035em;
 }
 
-.projects-page__section-index {
-  color: var(--muted);
-}
-
 .projects-page__grid {
   display: grid;
   gap: clamp(3.25rem, 8vw, 7rem) clamp(1.4rem, 3.5vw, 3.25rem);
@@ -1368,6 +1363,8 @@
 
 .projects-page__grid[data-project-count="1"] {
   grid-template-columns: minmax(0, 1fr);
+  width: min(100%, 820px);
+  margin-inline: auto;
 }
 
 .projects-page__item {
@@ -1387,7 +1384,8 @@
   left: 50%;
   width: min(44rem, 90%);
   height: 100%;
-  background: radial-gradient(circle at 50% 0, color-mix(in srgb, var(--violet) 13%, transparent), transparent 67%);
+  background: color-mix(in srgb, var(--violet) 6%, transparent);
+  filter: blur(6rem);
   content: "";
   pointer-events: none;
   transform: translateX(-50%);
@@ -1727,6 +1725,9 @@
 }
 
 .case-study__external-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
   padding: 0.8rem 1rem;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -1735,6 +1736,15 @@
   transition:
     border-color 200ms ease,
     background-color 200ms ease;
+}
+
+.project-card__visit .link-arrow,
+.projects-page__contact-link .link-arrow,
+.case-study__external-links .link-arrow,
+.case-study__back-link .link-arrow,
+.case-study__contact-link .link-arrow {
+  width: 0.9rem;
+  height: 0.9rem;
 }
 
 .case-study__footer {
@@ -2013,11 +2023,7 @@
 
   .project-card__link:hover,
   .project-card__link:focus-visible {
-    border-color: color-mix(in srgb, var(--blue) 58%, var(--line));
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.08),
-      0 2rem 5rem rgb(0 0 0 / 0.27),
-      0 0 2rem color-mix(in srgb, var(--blue) 8%, transparent);
+    box-shadow: none;
     transform: translateY(-0.25rem);
   }
 

@@ -10,7 +10,7 @@ export type PackagePlan = Readonly<{
   badge: string | null;
   featured: boolean;
   enabled: boolean;
-  whatsappMessage: string;
+  contactMessage: string;
   contactProjectType: string;
   order: number;
 }>;
@@ -43,7 +43,7 @@ export const packages: readonly PackagePlan[] = [
     badge: null,
     featured: false,
     enabled: true,
-    whatsappMessage:
+    contactMessage:
       "Hola, somos [nombre o empresa]. Vimos el paquete Landing Page en la web de INDEVOR y queremos consultar por un proyecto.",
     contactProjectType: "Landing page",
     order: 1,
@@ -72,7 +72,7 @@ export const packages: readonly PackagePlan[] = [
     badge: "Más elegido",
     featured: true,
     enabled: true,
-    whatsappMessage:
+    contactMessage:
       "Hola, somos [nombre o empresa]. Vimos el paquete Sitio Web en la web de INDEVOR y queremos recibir más información.",
     contactProjectType: "Sitio web",
     order: 2,
@@ -101,7 +101,7 @@ export const packages: readonly PackagePlan[] = [
     badge: null,
     featured: false,
     enabled: true,
-    whatsappMessage:
+    contactMessage:
       "Hola, somos [nombre o empresa]. Vimos el paquete Catálogo o Tienda Online en la web de INDEVOR y queremos consultar qué solución nos conviene.",
     contactProjectType: "Tienda o catálogo",
     order: 3,

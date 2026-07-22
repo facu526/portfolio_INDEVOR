@@ -1,4 +1,3 @@
-import { siteConfig } from "@/src/config/site";
 import { getEnabledPackages } from "@/src/data/packages";
 import { PackageContactLink } from "./PackageContactLink";
 import { PricingCard } from "./PricingCard";
@@ -9,9 +8,6 @@ const customProposalMessage =
 
 export function Pricing() {
   const enabledPackages = getEnabledPackages();
-  const whatsappUrl = siteConfig.contact.whatsapp.enabled
-    ? siteConfig.contact.whatsapp.href
-    : null;
 
   return (
     <section
@@ -22,10 +18,9 @@ export function Pricing() {
       <div className="section-shell">
         <Reveal className="section-heading pricing__heading">
           <div>
-            <p className="eyebrow">
-              <span /> Paquetes INDEVOR
-            </p>
-            <h2 id="pricing-title">Una solución para cada etapa</h2>
+            <h2 id="pricing-title">
+              Una solución para <span className="title-accent">cada etapa<span className="title-caret" aria-hidden="true">|</span></span>
+            </h2>
           </div>
           <div className="pricing__intro">
             <p>
@@ -46,7 +41,6 @@ export function Pricing() {
               <Reveal delay={index * 70}>
                 <PricingCard
                   packagePlan={packagePlan}
-                  whatsappUrl={whatsappUrl}
                 />
               </Reveal>
             </li>
@@ -71,8 +65,7 @@ export function Pricing() {
             className="pricing__custom-cta"
             packageName="Presupuesto personalizado"
             projectType="Otro"
-            whatsappMessage={customProposalMessage}
-            whatsappUrl={whatsappUrl}
+            contactMessage={customProposalMessage}
           >
             Pedir presupuesto personalizado
           </PackageContactLink>

@@ -5,9 +5,10 @@ export function About() {
   return (
     <section id="nosotros" className="section about" aria-labelledby="about-title">
       <div className="section-shell about__inner">
-        <Reveal><p className="eyebrow"><span /> {siteConfig.about.eyebrow}</p></Reveal>
-        <Reveal delay={70} className="about__copy">
-          <h2 id="about-title">{siteConfig.about.title}</h2>
+        <Reveal className="about__copy">
+          <h2 id="about-title">
+            Sobre <span className="title-accent">INDEVOR</span>
+          </h2>
           <p>{siteConfig.about.description}</p>
         </Reveal>
       </div>

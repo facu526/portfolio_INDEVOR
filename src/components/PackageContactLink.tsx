@@ -1,6 +1,7 @@
 "use client";
 
 import type { MouseEvent } from "react";
+import { LinkArrow } from "./LinkArrow";
 
 export const PACKAGE_SELECTION_EVENT = "indevor:package-selected";
 export const PACKAGE_SELECTION_STORAGE_KEY = "indevor:selected-package";
@@ -8,13 +9,13 @@ export const PACKAGE_SELECTION_STORAGE_KEY = "indevor:selected-package";
 export type PackageSelection = Readonly<{
   packageName: string;
   projectType: string;
+  message: string;
 }>;
 
 type PackageContactLinkProps = Readonly<{
   packageName: string;
   projectType: string;
-  whatsappMessage: string;
-  whatsappUrl: string | null;
+  contactMessage: string;
   className: string;
   children: string;
 }>;
@@ -22,19 +23,18 @@ type PackageContactLinkProps = Readonly<{
 export function PackageContactLink({
   packageName,
   projectType,
-  whatsappMessage,
-  whatsappUrl,
+  contactMessage,
   className,
   children,
 }: PackageContactLinkProps) {
-  const href = whatsappUrl
-    ? `${whatsappUrl}${whatsappUrl.includes("?") ? "&" : "?"}text=${encodeURIComponent(whatsappMessage)}`
-    : "#contacto";
+  const href = "#contacto";
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (whatsappUrl) return;
-
-    const selection: PackageSelection = { packageName, projectType };
+    const selection: PackageSelection = {
+      packageName,
+      projectType,
+      message: contactMessage,
+    };
     window.sessionStorage.setItem(
       PACKAGE_SELECTION_STORAGE_KEY,
       JSON.stringify(selection),
@@ -55,16 +55,12 @@ export function PackageContactLink({
     <a
       className={className}
       href={href}
-      target={whatsappUrl ? "_blank" : undefined}
-      rel={whatsappUrl ? "noreferrer" : undefined}
       aria-label={`${children}: ${packageName}`}
       onClick={handleClick}
     >
       {children}
       <span aria-hidden="true">
-        <svg viewBox="0 0 16 16" focusable="false">
-          <path d="M4 12 12 4M6 4h6v6" />
-        </svg>
+        <LinkArrow direction="down-right" />
       </span>
     </a>
   );

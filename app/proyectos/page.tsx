@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ProjectCard } from "@/src/components/ProjectCard";
+import { LinkArrow } from "@/src/components/LinkArrow";
 import { projects } from "@/src/data/projects";
 
 export const metadata: Metadata = {
@@ -22,16 +23,13 @@ export default function ProjectsPage() {
     <main id="contenido" className="projects-page">
       <header className="projects-page__hero">
         <div className="projects-page__hero-inner">
-          <p className="projects-page__eyebrow">Portfolio</p>
           <h1 className="projects-page__title">Proyectos</h1>
           <p className="projects-page__intro">
-            Una selección de proyectos donde combinamos estrategia, diseño y
-            desarrollo para construir experiencias digitales claras.
+            Estos son algunos de los sitios que hicimos.
           </p>
           <p className="projects-page__disclaimer">
-            Los trabajos conceptuales están identificados claramente como
-            <strong> Demo conceptual</strong>. No se presentan como clientes ni
-            incluyen resultados no verificados.
+            Áurea Eventos es una <strong>demo conceptual</strong> y no corresponde
+            a un cliente real.
           </p>
         </div>
       </header>
@@ -41,9 +39,6 @@ export default function ProjectsPage() {
         aria-labelledby="projects-page-heading"
       >
         <div className="projects-page__section-heading">
-          <p className="projects-page__section-index" aria-hidden="true">
-            {String(projects.length).padStart(2, "0")} — {String(projects.length).padStart(2, "0")}
-          </p>
           <h2 id="projects-page-heading">Proyectos seleccionados</h2>
         </div>
 
@@ -54,8 +49,6 @@ export default function ProjectsPage() {
                 project={project}
                 headingLevel="h3"
                 priority={index < 2}
-                index={index + 1}
-                total={projects.length}
               />
             </li>
           ))}
@@ -67,7 +60,7 @@ export default function ProjectsPage() {
         <h2 id="projects-contact-heading">Construyamos el próximo proyecto.</h2>
         <Link className="projects-page__contact-link" href="/#contacto">
           Hablemos
-          <span aria-hidden="true">↗</span>
+          <LinkArrow />
         </Link>
       </section>
     </main>

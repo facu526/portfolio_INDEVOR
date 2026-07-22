@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { headers } from "next/headers";
 import { Footer } from "@/src/components/Footer";
 import { Header } from "@/src/components/Header";
+import { FloatingWhatsApp } from "@/src/components/FloatingWhatsApp";
 import { siteConfig } from "@/src/config/site";
 import "./globals.css";
 import "./project-pages.css";
@@ -68,6 +69,7 @@ export default function RootLayout({
         <a className="skip-link" href="#contenido">Saltar al contenido</a>
         <Header />
         {children}
+        <FloatingWhatsApp />
         <Footer />
       </body>
     </html>
