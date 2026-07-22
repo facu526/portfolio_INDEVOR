@@ -1,4 +1,4 @@
-export type ProjectStatus = "Demo conceptual";
+export type ProjectStatus = "Proyecto publicado" | "Demo conceptual";
 
 export type Project = Readonly<{
   slug: string;
@@ -17,6 +17,23 @@ export type Project = Readonly<{
 }>;
 
 export const projects: readonly Project[] = [
+  {
+    slug: "felsani-motors",
+    name: "Felsani Motors",
+    shortDescription:
+      "Una plataforma para publicar, buscar y gestionar vehículos en venta desde una experiencia clara y responsive.",
+    category: "Plataforma de compraventa de vehículos",
+    year: 2026,
+    image: "/projects/felsani-motors/cover.png",
+    imageAlt:
+      "Página de publicaciones de Felsani Motors con buscador y catálogo de vehículos",
+    imageWidth: 1600,
+    imageHeight: 1000,
+    tags: ["Diseño UX/UI", "Frontend", "Backend", "Responsive"],
+    liveUrl: "https://felsani-motors-frontend.vercel.app/",
+    status: "Proyecto publicado",
+    featured: true,
+  },
   {
     slug: "aurea-eventos",
     name: "Áurea Eventos",

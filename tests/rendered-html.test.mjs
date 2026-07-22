@@ -101,18 +101,23 @@ test("server-renders the complete INDEVOR home", async () => {
   );
 });
 
-test("renders the project index and Áurea Eventos", async () => {
+test("renders the project index and every project detail", async () => {
   const indexResponse = await render("/proyectos");
   assert.equal(indexResponse.status, 200);
   const indexHtml = await indexResponse.text();
   assert.match(indexHtml, /Demo conceptual/);
 
-  for (const [slug, name] of [["aurea-eventos", "Áurea Eventos"]]) {
+  assert.match(indexHtml, /Proyecto publicado/);
+
+  for (const [slug, name, status] of [
+    ["felsani-motors", "Felsani Motors", "Proyecto publicado"],
+    ["aurea-eventos", "Áurea Eventos", "Demo conceptual"],
+  ]) {
     const response = await render(`/proyectos/${slug}`);
     assert.equal(response.status, 200);
     const html = await response.text();
     assert.match(html, new RegExp(`<h1[^>]*>${name}<\\/h1>`));
-    assert.match(html, /Demo conceptual/);
+    assert.match(html, new RegExp(status));
     assert.doesNotMatch(html, /href=["']#["']/i);
     assert.doesNotMatch(html, /href=["'](?:[^"']*\.example|https:\/\/wa\.me\/5491100000000)/i);
   }
