@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/src/config/site";
+import { enabledTestimonials } from "@/src/data/testimonials";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -60,7 +61,9 @@ export function Header() {
         </button>
 
         <nav ref={navRef} id="site-navigation" className="site-header__nav" aria-label="Navegación principal">
-          {siteConfig.navigation.map((item) => (
+          {siteConfig.navigation
+            .filter((item) => item.href !== "/#resenas" || enabledTestimonials.length > 0)
+            .map((item) => (
             <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
               {item.label}
             </Link>

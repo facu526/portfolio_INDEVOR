@@ -1,11 +1,5 @@
 import { Reveal } from "./Reveal";
-
-const reviewSlots = [
-  { initial: "S", category: "Sitios web" },
-  { initial: "L", category: "Landing pages" },
-  { initial: "W", category: "Sistemas web" },
-  { initial: "T", category: "Tiendas online" },
-] as const;
+import { enabledTestimonials } from "@/src/data/testimonials";
 
 export function Reviews() {
   return (
@@ -13,32 +7,58 @@ export function Reviews() {
       <div className="section-shell">
         <Reveal className="reviews__heading">
           <h2 id="reviews-title">
-            Negocios que <span className="title-accent">confiaron<span className="title-caret" aria-hidden="true">|</span></span>
+            Experiencias <span className="title-accent">compartidas</span>
           </h2>
           <p className="reviews__intro">
-            Acá vamos a compartir experiencias reales de clientes que trabajen
-            con INDEVOR.
+            Comentarios de personas que conocieron nuestro trabajo y participaron
+            en nuestros proyectos.
           </p>
         </Reveal>
 
         <div className="reviews__grid">
-          {reviewSlots.map((slot, index) => (
-            <Reveal key={slot.category} delay={70 + index * 55}>
-              <article className="review-card">
+          {enabledTestimonials.map((testimonial) => {
+            const rating = Math.max(
+              0,
+              Math.min(5, Math.round(testimonial.rating)),
+            );
+            const relationship = [testimonial.role, testimonial.project]
+              .filter(Boolean)
+              .join(" · ");
+
+            return (
+              <article className="review-card" key={testimonial.id}>
                 <header className="review-card__header">
-                  <span className="review-card__avatar" aria-hidden="true">{slot.initial}</span>
+                  <span className="review-card__avatar" aria-hidden="true">
+                    {testimonial.initial}
+                  </span>
                   <div>
-                    <h3>Próximamente</h3>
-                    <p>{slot.category}</p>
+                    <h3>{testimonial.name}</h3>
+                    {relationship && <p>{relationship}</p>}
                   </div>
                 </header>
-                <p className="review-card__quote">
-                  “Este espacio está reservado para una reseña real.”
-                </p>
-                <span className="review-card__mark" aria-hidden="true">“</span>
+                <div
+                  className="review-card__rating"
+                  aria-label={`${rating} de 5 estrellas`}
+                >
+                  {Array.from({ length: 5 }, (_, starIndex) => (
+                    <span
+                      key={starIndex}
+                      aria-hidden="true"
+                      data-active={starIndex < rating}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <blockquote className="review-card__quote">
+                  <p>{testimonial.comment}</p>
+                </blockquote>
+                <span className="review-card__mark" aria-hidden="true">
+                  “
+                </span>
               </article>
-            </Reveal>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

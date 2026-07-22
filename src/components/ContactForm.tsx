@@ -163,10 +163,12 @@ export function ContactForm({ email }: ContactFormProps) {
 
       <div className="contact-form__field">
         <label htmlFor="contact-email">Email</label>
+        {/* Algunas extensiones de temp-mail modifican este input antes de que React hidrate. */}
         <input
           id="contact-email"
           name="email"
           type="email"
+          suppressHydrationWarning
           inputMode="email"
           autoComplete="email"
           placeholder="nombre@correo.com"

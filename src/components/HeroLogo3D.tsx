@@ -89,7 +89,7 @@ export function HeroLogo3D() {
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.02;
         renderer.shadowMap.enabled = !mobile;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.shadowMap.type = THREE.PCFShadowMap;
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 2400);
@@ -126,7 +126,7 @@ export function HeroLogo3D() {
           const pieceGroup = new THREE.Group();
           const materials: MeshPhysicalMaterial[] = [];
 
-          for (const shape of SVGLoader.createShapes(path)) {
+          for (const shape of path.toShapes()) {
             const geometry = new THREE.ExtrudeGeometry(shape, {
               depth,
               curveSegments: mobile ? 12 : 20,

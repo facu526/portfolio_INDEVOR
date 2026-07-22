@@ -58,9 +58,12 @@ test("server-renders the complete INDEVOR home", async () => {
   assert.match(html, /Diseñamos\./);
   assert.match(html, /Desarrollamos\./);
   assert.match(html, /Proyectos destacados/);
-  assert.match(html, /Negocios que/);
-  assert.match(html, /confiaron/);
-  assert.match(html, /Este espacio está reservado para una reseña real/);
+  assert.match(html, /Experiencias/);
+  assert.match(html, /compartidas/);
+  assert.match(html, /<section[^>]*id="resenas"/);
+  assert.match(html, /Comentarios de personas que conocieron nuestro trabajo/);
+  assert.equal((html.match(/class="review-card"/g) ?? []).length, 4);
+  assert.doesNotMatch(html, /Próximamente|Este espacio está reservado/);
   assert.match(html, /href="\/#resenas"/);
   assert.match(html, /Una solución para/);
   assert.match(html, /cada etapa/);
@@ -80,6 +83,7 @@ test("server-renders the complete INDEVOR home", async () => {
   assert.match(html, /juntos\?/);
   assert.match(html, /Contanos sobre tu proyecto/);
   assert.match(html, /Enviar consulta/);
+  assert.match(html, /<input[^>]*id="contact-email"[^>]*type="email"/);
   assert.match(html, /\+54 9 11 1234-5678/);
   assert.match(html, /class="floating-whatsapp"/);
   assert.match(html, /href="https:\/\/wa\.me\/5491112345678"/);
@@ -115,18 +119,28 @@ test("renders the project index and Áurea Eventos", async () => {
 });
 
 test("keeps starter preview code and placeholder links out of the finished site", async () => {
-  const [layout, page, packageJson, siteConfig, packageData] = await Promise.all([
+  const [layout, page, packageJson, siteConfig, packageData, testimonialData, reviews, contactForm] = await Promise.all([
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
     readFile(new URL("../src/config/site.ts", import.meta.url), "utf8"),
     readFile(new URL("../src/data/packages.ts", import.meta.url), "utf8"),
+    readFile(new URL("../src/data/testimonials.ts", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/Reviews.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/ContactForm.tsx", import.meta.url), "utf8"),
   ]);
 
   assert.doesNotMatch(`${layout}\n${page}\n${packageJson}`, /codex-preview|SkeletonPreview|react-loading-skeleton/);
   assert.equal((siteConfig.match(/enabled:\s*false/g) ?? []).length, 2);
   assert.equal((packageData.match(/enabled:\s*true/g) ?? []).length, 3);
   assert.match(packageData, /TODO: Revisar precios, prestaciones y mensajes comerciales/);
+  assert.equal((testimonialData.match(/^\s{4}enabled:\s*false,/gm) ?? []).length, 0);
+  assert.equal((testimonialData.match(/^\s{4}enabled:\s*true,/gm) ?? []).length, 4);
+  assert.match(reviews, /Experiencias/);
+  assert.match(reviews, /compartidas/);
+  assert.equal((contactForm.match(/suppressHydrationWarning/g) ?? []).length, 1);
+  assert.doesNotMatch(layout, /suppressHydrationWarning/);
+  assert.match(layout, /data-scroll-behavior="smooth"/);
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));
   await access(new URL("../public/brand/indevor-logo-oficial.png", import.meta.url));
   await access(new URL("../public/brand/indevor-symbol.png", import.meta.url));
