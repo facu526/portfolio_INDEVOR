@@ -63,7 +63,7 @@ export const teamMembers: readonly TeamMember[] = [
     description: memberDescription,
     portrait: {
       kind: "image",
-      src: "/team/cui-cui.jpg",
+      src: "/team/Facundo_Iriarte.jpg",
       alt: "Facundo Iriarte, integrante de INDEVOR",
       width: 880,
       height: 1184,
