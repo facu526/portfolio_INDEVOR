@@ -35,7 +35,7 @@ function InstagramIcon() {
 type ContactChannelProps = Readonly<{
   label: string;
   value: string;
-  href: string;
+  href?: string;
   enabled: boolean;
   external?: boolean;
   icon: ReactNode;
@@ -51,6 +51,7 @@ function ContactChannel({
   icon,
   variant = "",
 }: ContactChannelProps) {
+  const isInteractive = enabled && Boolean(href);
   const className = [
     "contact__channel",
     variant,
@@ -66,7 +67,7 @@ function ContactChannel({
         <strong>{value}</strong>
       </span>
       <span className="contact__channel-arrow" aria-hidden="true">
-        {enabled ? <LinkArrow /> : null}
+        {isInteractive ? <LinkArrow /> : null}
       </span>
     </>
   );
@@ -77,6 +78,10 @@ function ContactChannel({
         {content}
       </div>
     );
+  }
+
+  if (!href) {
+    return <div className={className}>{content}</div>;
   }
 
   return (
@@ -93,7 +98,6 @@ function ContactChannel({
 
 export function Contact() {
   const { contact } = siteConfig;
-  const email = contact.email.enabled ? contact.email.value : null;
 
   return (
     <section
@@ -119,7 +123,6 @@ export function Contact() {
             <ContactChannel
               label="Correo"
               value={contact.email.label}
-              href={contact.email.href}
               enabled={contact.email.enabled}
               icon={<MailIcon />}
             />
@@ -139,7 +142,7 @@ export function Contact() {
             <div className="contact__form-heading">
               <h3>Contanos sobre tu proyecto</h3>
             </div>
-            <ContactForm email={email} />
+            <ContactForm />
           </div>
         </Reveal>
       </div>

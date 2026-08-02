@@ -3,7 +3,7 @@ import { WhatsAppIcon } from "./WhatsAppIcon";
 
 export function FloatingWhatsApp() {
   const { whatsapp } = siteConfig.contact;
-  if (!whatsapp.enabled) return null;
+  if (!whatsapp.enabled || !whatsapp.href) return null;
 
   return (
     <a

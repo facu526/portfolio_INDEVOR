@@ -84,12 +84,14 @@ test("server-renders the complete INDEVOR home", async () => {
   assert.match(html, /Contanos sobre tu proyecto/);
   assert.match(html, /Enviar consulta/);
   assert.match(html, /<input[^>]*id="contact-email"[^>]*type="email"/);
-  assert.match(html, /\+54 9 11 1234-5678/);
+  assert.match(html, /\+54 9 11 2256-3384/);
   assert.match(html, /class="floating-whatsapp"/);
-  assert.match(html, /href="https:\/\/wa\.me\/5491112345678"/);
+  assert.match(html, /href="https:\/\/wa\.me\/5491122563384"/);
   assert.doesNotMatch(html, /Google Reviews|reviews__google|contact__channel--whatsapp/);
-  assert.match(html, /hola@indevor\.com/);
-  assert.match(html, /@indevor\.digital/);
+  assert.match(html, /indevoroficial@gmail\.com/);
+  assert.doesNotMatch(html, /mailto:/i);
+  assert.match(html, /href="https:\/\/www\.instagram\.com\/indevor_oficial\/#"/);
+  assert.match(html, /indevor_oficial/);
   assert.doesNotMatch(html, /Por configurar|Datos de contacto provisionales|Se abrirá tu aplicación de correo/);
   assert.doesNotMatch(html, />Explorar(?:<|\s)|>Capacidades(?:<|\s)|capabilities__number|[↗↘←→↓]/);
   assert.doesNotMatch(html, /href=["'](?:https:\/\/wa\.me\/5491100000000|mailto:hola@indevor\.com|https:\/\/www\.instagram\.com\/indevor\.digital\/)["']/i);
@@ -123,8 +125,61 @@ test("renders the project index and every project detail", async () => {
   }
 });
 
+test("validates contact requests and silently rejects the honeypot", async () => {
+  const invalidResponse = await fetch(`${testServerUrl}/api/contact`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "",
+      email: "not-an-email",
+      phone: "",
+      projectType: "",
+      message: "",
+      website: "",
+    }),
+  });
+  const invalidBody = await invalidResponse.json();
+
+  assert.equal(invalidResponse.status, 400);
+  assert.equal(invalidBody.ok, false);
+  assert.deepEqual(Object.keys(invalidBody.errors).sort(), [
+    "email",
+    "message",
+    "name",
+    "phone",
+    "projectType",
+  ]);
+
+  const honeypotResponse = await fetch(`${testServerUrl}/api/contact`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ website: "https://spam.example" }),
+  });
+
+  assert.equal(honeypotResponse.status, 200);
+  assert.deepEqual(await honeypotResponse.json(), { ok: true });
+
+  if (!process.env.RESEND_API_KEY) {
+    const unavailableResponse = await fetch(`${testServerUrl}/api/contact`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        name: "Prueba INDEVOR",
+        email: "visitante@example.com",
+        phone: "+54 9 11 0000-0000",
+        projectType: "Sitio web",
+        message: "Mensaje de prueba para validar el estado de error.",
+        website: "",
+      }),
+    });
+
+    assert.equal(unavailableResponse.status, 503);
+    assert.equal((await unavailableResponse.json()).ok, false);
+  }
+});
+
 test("keeps starter preview code and placeholder links out of the finished site", async () => {
-  const [layout, page, packageJson, siteConfig, packageData, testimonialData, reviews, contactForm] = await Promise.all([
+  const [layout, page, packageJson, siteConfig, packageData, testimonialData, reviews, contactForm, contactRoute, envExample, gitignore] = await Promise.all([
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
@@ -133,10 +188,13 @@ test("keeps starter preview code and placeholder links out of the finished site"
     readFile(new URL("../src/data/testimonials.ts", import.meta.url), "utf8"),
     readFile(new URL("../src/components/Reviews.tsx", import.meta.url), "utf8"),
     readFile(new URL("../src/components/ContactForm.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/api/contact/route.ts", import.meta.url), "utf8"),
+    readFile(new URL("../.env.example", import.meta.url), "utf8"),
+    readFile(new URL("../.gitignore", import.meta.url), "utf8"),
   ]);
 
   assert.doesNotMatch(`${layout}\n${page}\n${packageJson}`, /codex-preview|SkeletonPreview|react-loading-skeleton/);
-  assert.equal((siteConfig.match(/enabled:\s*false/g) ?? []).length, 2);
+  assert.equal((siteConfig.match(/enabled:\s*false/g) ?? []).length, 0);
   assert.equal((packageData.match(/enabled:\s*true/g) ?? []).length, 3);
   assert.match(packageData, /TODO: Revisar precios, prestaciones y mensajes comerciales/);
   assert.equal((testimonialData.match(/^\s{4}enabled:\s*false,/gm) ?? []).length, 0);
@@ -144,6 +202,22 @@ test("keeps starter preview code and placeholder links out of the finished site"
   assert.match(reviews, /Experiencias/);
   assert.match(reviews, /compartidas/);
   assert.equal((contactForm.match(/suppressHydrationWarning/g) ?? []).length, 1);
+  assert.match(packageJson, /"resend"/);
+  assert.match(contactForm, /fetch\("\/api\/contact"/);
+  assert.match(contactForm, /Enviando…/);
+  assert.match(contactForm, /¡Consulta enviada! Nos pondremos en contacto con vos a la brevedad\./);
+  assert.match(contactForm, /No pudimos enviar tu consulta\. Intentá nuevamente o escribinos por WhatsApp\./);
+  assert.match(contactForm, /name="website"/);
+  assert.doesNotMatch(contactForm, /mailto:|window\.location\.href/);
+  assert.match(contactRoute, /new Resend\(apiKey\)/);
+  assert.match(contactRoute, /process\.env\.RESEND_API_KEY/);
+  assert.doesNotMatch(contactRoute, /NEXT_PUBLIC_RESEND_API_KEY/);
+  assert.match(contactRoute, /replyTo: email/);
+  assert.match(contactRoute, /indevoroficial@gmail\.com/);
+  assert.match(contactRoute, /INDEVOR <onboarding@resend\.dev>/);
+  assert.match(contactRoute, /escapeHtml/);
+  assert.equal(envExample.trim(), "RESEND_API_KEY=");
+  assert.match(gitignore, /!\.env\.example/);
   assert.doesNotMatch(layout, /suppressHydrationWarning/);
   assert.match(layout, /data-scroll-behavior="smooth"/);
   await assert.rejects(access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)));

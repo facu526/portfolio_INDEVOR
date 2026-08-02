@@ -50,10 +50,10 @@ export const teamMembers: readonly TeamMember[] = [
     description: memberDescription,
     portrait: {
       kind: "image",
-      src: "/team/telita.jpg",
+      src: "/team/santiago-peralta-2026.jpg",
       alt: "Santiago Peralta, integrante de INDEVOR",
-      width: 748,
-      height: 1600,
+      width: 1086,
+      height: 1448,
       position: "center 30%",
     },
   },
@@ -75,10 +75,10 @@ export const teamMembers: readonly TeamMember[] = [
     description: memberDescription,
     portrait: {
       kind: "image",
-      src: "/team/cejitas-premium.jpg",
+      src: "/team/facundo-moran-2026.jpg",
       alt: "Facundo Moran, integrante de INDEVOR",
-      width: 676,
-      height: 899,
+      width: 400,
+      height: 400,
     },
   },
   {

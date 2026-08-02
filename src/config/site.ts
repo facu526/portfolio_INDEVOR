@@ -8,12 +8,11 @@ export type CtaLink = Readonly<{
   href: string;
 }>;
 
-export type ProvisionalContactChannel = Readonly<{
+export type ContactChannel = Readonly<{
   value: string;
   label: string;
-  href: string;
+  href?: string;
   enabled: boolean;
-  isProvisional: true;
 }>;
 
 export type SiteConfig = Readonly<{
@@ -43,23 +42,16 @@ export type SiteConfig = Readonly<{
   }>;
   contact: Readonly<{
     description: string;
-    isProvisional: true;
-    replacementNote: string;
-    email: ProvisionalContactChannel;
-    whatsapp: ProvisionalContactChannel;
-    instagram: ProvisionalContactChannel;
+    email: ContactChannel;
+    whatsapp: ContactChannel;
+    instagram: ContactChannel;
   }>;
   footer: Readonly<{
     note: string;
   }>;
 }>;
 
-/**
- * Editable site copy and contact details.
- *
- * IMPORTANT: email and Instagram below are deliberate placeholders. WhatsApp
- * opens without a recipient until the official number is available.
- */
+/** Editable site copy and contact details. */
 export const siteConfig = {
   name: "INDEVOR",
   metadata: {
@@ -103,32 +95,22 @@ export const siteConfig = {
   },
   contact: {
     description: "Contanos tu idea y veamos cómo podemos llevarla a la web.",
-    isProvisional: true,
-    replacementNote:
-      "TODO antes de publicar: confirmar el número de WhatsApp y reemplazar correo e Instagram por los datos oficiales de INDEVOR.",
-    // TODO: Reemplazar por el correo definitivo de INDEVOR
     email: {
-      value: "hola@indevor.com",
-      label: "hola@indevor.com",
-      href: "mailto:hola@indevor.com",
-      enabled: false,
-      isProvisional: true,
-    },
-    // TODO: Confirmar o reemplazar por el número definitivo de INDEVOR
-    whatsapp: {
-      value: "5491112345678",
-      label: "+54 9 11 1234-5678",
-      href: "https://wa.me/5491112345678",
+      value: "indevoroficial@gmail.com",
+      label: "indevoroficial@gmail.com",
       enabled: true,
-      isProvisional: true,
     },
-    // TODO: Reemplazar por el Instagram definitivo de INDEVOR
+    whatsapp: {
+      value: "5491122563384",
+      label: "+54 9 11 2256-3384",
+      href: "https://wa.me/5491122563384",
+      enabled: true,
+    },
     instagram: {
-      value: "@indevor.digital",
-      label: "@indevor.digital",
-      href: "https://www.instagram.com/indevor.digital/",
-      enabled: false,
-      isProvisional: true,
+      value: "indevor_oficial",
+      label: "indevor_oficial",
+      href: "https://www.instagram.com/indevor_oficial/#",
+      enabled: true,
     },
   },
   footer: {
